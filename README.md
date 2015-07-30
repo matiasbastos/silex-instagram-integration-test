@@ -24,3 +24,7 @@ To run the tests, you will need to have [PHPUnit](https://phpunit.de/manual/3.7/
 ```
 $ phpunit
 ```
+
+## Credits
+
+Matias Bastos.
