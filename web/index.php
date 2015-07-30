@@ -10,7 +10,9 @@ use MetzWeb\Instagram\Instagram;
 
 // lets create a silex app
 $app = new Silex\Application();
-// DI: twig
+// debug on
+$app['debug'] = true;
+// dependency injection: twig
 $app->register(new Silex\Provider\TwigServiceProvider(), array( 'twig.path' => __DIR__.'/views'));
 // the instagram api object of: https://github.com/cosenary/Instagram-PHP-API
 $app['instagram'] = function () {
@@ -26,17 +28,14 @@ $app->get('/media/{id}', function ($id) use ($app) {
     $instagram = $app['instagram'];
     $media = $instagram->getMedia($id);
     if($media->meta->code != 200) return $app->json($media, $media->meta->code);
-    $json_response = ['id'=>$media->data->id, 'location'=>['geopoint'=>$media->data->location]];
-    return $app->json($json_response);
+    return $app->json(['id'=>$media->data->id, 'location'=>['geopoint'=>$media->data->location]]);
 });
 
 // this url is an instagram login
 $app->get('/', function () use ($app) {
     $instagram = $app['instagram'];
     $loginUrl = $instagram->getLoginUrl();
-    return $app['twig']->render('login.twig', array(
-        'loginUrl' => $loginUrl,
-    ));
+    return $app['twig']->render('login.twig', array('loginUrl' => $loginUrl));
 });
 
 // this url shows a gallery with the media of the logged user
@@ -73,9 +72,9 @@ $app->get('/redirecturi', function () use ($app) {
             $poster = $media->images->low_resolution->url;
             $source = $media->videos->standard_resolution->url;
             $content .= "<video class=\"media video-js vjs-default-skin\" width=\"250\" height=\"250\" poster=\"{$poster}\"
-                   data-setup='{\"controls\":true, \"preload\": \"auto\"}'>
-                     <source src=\"{$source}\" type=\"video/mp4\" />
-                   </video>";
+                         data-setup='{\"controls\":true, \"preload\": \"auto\"}'>
+                         <source src=\"{$source}\" type=\"video/mp4\" />
+                         </video>";
         } else {
             // image
             $image = $media->images->low_resolution->url;
@@ -86,10 +85,10 @@ $app->get('/redirecturi', function () use ($app) {
         $username = $media->user->username;
         $comment = $media->caption->text;
         $content .= "<div class=\"content\">
-                   <div class=\"avatar\" style=\"background-image: url({$avatar})\"></div>
-                   <p>{$username}</p>
-                   <div class=\"comment\">{$comment}</div>
-                 </div>";
+                       <div class=\"avatar\" style=\"background-image: url({$avatar})\"></div>
+                       <p>{$username}</p>
+                       <div class=\"comment\">{$comment}</div>
+                     </div>";
         // debug media
         //$mediahtml .= "<xmp>".print_r($media, true)."</xmp>";
         // output media
@@ -103,5 +102,4 @@ $app->get('/redirecturi', function () use ($app) {
 });
 
 // run silex
-$app['debug'] = true;
 $app->run();
