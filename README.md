@@ -17,7 +17,7 @@ $ git clone https://github.com/matiasbastos/olapic-test.git
 $ cd olapic-test
 $ php -S localhost:8080 -t web web/index.php
 ```
-Then you can write in your browser "localhost:8080/media/1039923172635336043_47787070", for example,  to test the media api. Or go to "localhost:8080" to see the Instagram login.
+Then you can write in your browser "(localhost:8080/media/1039923172635336043_47787070)", for example,  to test the media api. Or go to "(localhost:8080)" to see the Instagram login.
 
 ### Unit Testing
 To run the tests, you will need to have [PHPUnit](https://phpunit.de/manual/3.7/en/installation.html) installed. Then in the console go to the project root dir and run:
