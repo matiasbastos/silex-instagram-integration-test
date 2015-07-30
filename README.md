@@ -27,4 +27,4 @@ $ phpunit
 
 ## Credits
 
-Matias Bastos.
+[Matias Bastos](https://ar.linkedin.com/in/matiasbastos)
