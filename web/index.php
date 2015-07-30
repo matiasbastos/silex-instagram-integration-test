@@ -1,16 +1,18 @@
 <?php
+// to handle statics
 if(preg_match('/\.(?:css|png|jpg|jpeg|gif)$/', $_SERVER["REQUEST_URI"])) return false;   
 
+// autoload vendors
 require_once __DIR__.'/../vendor/autoload.php';
 
+// use
 use MetzWeb\Instagram\Instagram;
 
+// lets create a silex app
 $app = new Silex\Application();
-
-$app->register(new Silex\Provider\TwigServiceProvider(), array(
-    'twig.path' => __DIR__.'/views',
-));
-
+// DI: twig
+$app->register(new Silex\Provider\TwigServiceProvider(), array( 'twig.path' => __DIR__.'/views'));
+// the instagram api object of: https://github.com/cosenary/Instagram-PHP-API
 $app['instagram'] = function () {
     return new Instagram(array(
         'apiKey' => 'b32840dfd1d64dd2becd20ddb86c7e98',
@@ -19,6 +21,16 @@ $app['instagram'] = function () {
     ));
 };
 
+// this url gets the media info
+$app->get('/media/{id}', function ($id) use ($app) {
+    $instagram = $app['instagram'];
+    $media = $instagram->getMedia($id);
+    if($media->meta->code != 200) return $app->json($media, $media->meta->code);
+    $json_response = ['id'=>$media->data->id, 'location'=>['geopoint'=>$media->data->location]];
+    return $app->json($json_response);
+});
+
+// this url is an instagram login
 $app->get('/', function () use ($app) {
     $instagram = $app['instagram'];
     $loginUrl = $instagram->getLoginUrl();
@@ -27,6 +39,7 @@ $app->get('/', function () use ($app) {
     ));
 });
 
+// this url shows a gallery with the media of the logged user
 $app->get('/redirecturi', function () use ($app) {
     $instagram = $app['instagram'];
     // receive OAuth code parameter
@@ -89,13 +102,6 @@ $app->get('/redirecturi', function () use ($app) {
     ));
 });
 
-$app->get('/media/{id}', function ($id) use ($app) {
-    $instagram = $app['instagram'];
-    $media = $instagram->getMedia($id);
-    if($media->meta->code != 200) return $app->json($media, $media->meta->code);
-    $json_response = ['id'=>$media->data->id, 'location'=>['geopoint'=>$media->data->location]];
-    return $app->json($json_response);
-});
-
+// run silex
 $app['debug'] = true;
 $app->run();
