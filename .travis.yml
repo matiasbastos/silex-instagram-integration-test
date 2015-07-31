@@ -6,13 +6,15 @@ php:
   - 7.0
   - hhvm
 
-before_script:
+before_install:
   - travis_retry composer self-update
-  - travis_retry composer install --prefer-source --no-interaction --dev
+    
+before_script:
+  - travis_retry composer install
 
 script:
-  - ./vendor/bin/phpunit --coverage-text
-  - ./vendor/bin/phpcs src --standard=psr2
+  - ./vendor/bin/phpunit  --configuration phpunit.xml --coverage-text
+  - ./vendor/bin/phpcs web --standard=psr2
 
 matrix:
   allow_failures:
