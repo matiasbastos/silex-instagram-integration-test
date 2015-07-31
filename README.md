@@ -1,4 +1,7 @@
 # Olapic Test
+
+[![Build Status](https://travis-ci.org/matiasbastos/olapic-test.svg?branch=master)](https://travis-ci.org/matiasbastos/olapic-test)
+
 This is an Olapic Test made to create a json api to get media info from Instagram.
 
 ## Get started
