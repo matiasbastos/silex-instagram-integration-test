@@ -16,8 +16,10 @@ So if u enter to the root url ('/') you will see an Instragram login page, and a
 ### How to run this project
 To run this project just type this into the terminal:
 ```
-$ git clone https://github.com/matiasbastos/olapic-test.git
-$ cd olapic-test
+$ git clone https://github.com/matiasbastos/silex-instagram-integration-test.git
+$ cd silex-instagram-integration-test
+$ composer self-update
+$ composer install
 $ php -S localhost:8080 -t web web/index.php
 ```
 Then you can write in your browser 'localhost:8080/media/1039923172635336043_47787070', for example,  to test the media api. Or go to 'localhost:8080' to see the Instagram login.
