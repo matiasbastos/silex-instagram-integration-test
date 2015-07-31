@@ -9,7 +9,7 @@
          stopOnFailure="false"
          syntaxCheck="false" >
     <testsuites>
-        <testsuite name="Olapic media function test">
+        <testsuite name="Silex/Instagram integration test suite">
             <directory>./tests/</directory>
         </testsuite>
     </testsuites>

@@ -1,8 +1,8 @@
-# Olapic Test
+# Silex/Instagram Integration Test
 
-[![Build Status](https://travis-ci.org/matiasbastos/olapic-test.svg?branch=master)](https://travis-ci.org/matiasbastos/olapic-test)
+[![Build Status](https://travis-ci.org/matiasbastos/silex-instagram-integration-test.svg?branch=master)](https://travis-ci.org/matiasbastos/silex-instagram-integration-test)
 
-This is an Olapic Test made to create a json api to get media info from Instagram.
+This is an integration test with Silex and Instagram API. It provides a json api to get media info from Instagram, an Instagram login page and a gallery page so see the logued user media.
 
 ## Get started
 The objective of the test was to provide a json api to get the location info of a media element from Instagram.
