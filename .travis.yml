@@ -15,6 +15,7 @@ before_script:
 script:
   - ./vendor/bin/phpunit  --configuration phpunit.xml --coverage-text
   - ./vendor/bin/phpcs web --standard=psr2
+  - ./vendor/bin/phpcs app --standard=psr2
 
 matrix:
   allow_failures:
