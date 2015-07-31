@@ -22,7 +22,7 @@ class MediaController
         $loginUrl = $instagram->getLoginUrl();
 
         return $app['twig']->render('login.twig', array('loginUrl' => $loginUrl));
-     }   
+    }
 
     public function showInstagramMedia(Application $app)
     {
@@ -85,5 +85,5 @@ class MediaController
             'username' => $data->user->username,
             'media' => $mediahtml,
         ));
-    }    
+    }
 }
