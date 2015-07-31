@@ -1,6 +1,9 @@
 <?php
+
 // to handle statics
-if(preg_match('/\.(?:css|png|jpg|jpeg|gif)$/', $_SERVER["REQUEST_URI"])) return false;   
+if (preg_match('/\.(?:css|png|jpg|jpeg|gif)$/', $_SERVER['REQUEST_URI'])) {
+    return false;
+}
 
 // autoload vendors
 require_once __DIR__.'/../vendor/autoload.php';
@@ -8,18 +11,18 @@ require_once __DIR__.'/../vendor/autoload.php';
 // use
 use MetzWeb\Instagram\Instagram;
 
-// lets create a silex app
+            // lets create a silex app
 $app = new Silex\Application();
 // debug on
 $app['debug'] = true;
 // dependency injection: twig
-$app->register(new Silex\Provider\TwigServiceProvider(), array( 'twig.path' => __DIR__.'/views'));
+$app->register(new Silex\Provider\TwigServiceProvider(), array('twig.path' => __DIR__.'/views'));
 // the instagram api object of: https://github.com/cosenary/Instagram-PHP-API
 $app['instagram'] = function () {
     return new Instagram(array(
         'apiKey' => 'b32840dfd1d64dd2becd20ddb86c7e98',
         'apiSecret' => '164067ddc96544acb66875202fe372a3',
-        'apiCallback' => 'http://localhost:8080/redirecturi'
+        'apiCallback' => 'http://localhost:8080/redirecturi',
     ));
 };
 
@@ -27,14 +30,18 @@ $app['instagram'] = function () {
 $app->get('/media/{id}', function ($id) use ($app) {
     $instagram = $app['instagram'];
     $media = $instagram->getMedia($id);
-    if($media->meta->code != 200) return $app->json($media, $media->meta->code);
-    return $app->json(['id'=>$media->data->id, 'location'=>['geopoint'=>$media->data->location]]);
+    if ($media->meta->code != 200) {
+        return $app->json($media, $media->meta->code);
+    }
+
+    return $app->json(['id' => $media->data->id, 'location' => ['geopoint' => $media->data->location]]);
 });
 
 // this url is an instagram login
 $app->get('/', function () use ($app) {
     $instagram = $app['instagram'];
     $loginUrl = $instagram->getLoginUrl();
+
     return $app['twig']->render('login.twig', array('loginUrl' => $loginUrl));
 });
 
@@ -59,7 +66,7 @@ $app->get('/redirecturi', function () use ($app) {
     } else {
         // check whether an error occurred
         if (isset($_GET['error'])) {
-            return 'An error occurred: ' . $_GET['error_description'];
+            return 'An error occurred: '.$_GET['error_description'];
         }
     }
     $mediahtml = '';
@@ -92,9 +99,10 @@ $app->get('/redirecturi', function () use ($app) {
         // debug media
         //$mediahtml .= "<xmp>".print_r($media, true)."</xmp>";
         // output media
-        $mediahtml .= $content . '</li>';
+        $mediahtml .= $content.'</li>';
     }
-    $mediahtml= '<ul class="grid">'.$mediahtml.'</ul>';
+    $mediahtml = '<ul class="grid">'.$mediahtml.'</ul>';
+
     return $app['twig']->render('media.twig', array(
         'username' => $data->user->username,
         'media' => $mediahtml,
