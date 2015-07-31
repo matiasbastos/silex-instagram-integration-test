@@ -1,7 +1,7 @@
 <?php
 
 // to handle statics
-if (preg_match('/\.(?:css|png|jpg|jpeg|gif)$/', $_SERVER['REQUEST_URI'])) {
+if (array_key_exists('REQUEST_URI', $_SERVER) && preg_match('/\.(?:css|png|jpg|jpeg|gif)$/', $_SERVER['REQUEST_URI'])) {
     return false;
 }
 
@@ -78,8 +78,8 @@ $app->get('/redirecturi', function () use ($app) {
             // video
             $poster = $media->images->low_resolution->url;
             $source = $media->videos->standard_resolution->url;
-            $content .= "<video class=\"media video-js vjs-default-skin\" width=\"250\" height=\"250\" poster=\"{$poster}\"
-                         data-setup='{\"controls\":true, \"preload\": \"auto\"}'>
+            $content .= "<video class=\"media video-js vjs-default-skin\" width=\"250\" height=\"250\" 
+                         poster=\"{$poster}\" data-setup='{\"controls\":true, \"preload\": \"auto\"}'>
                          <source src=\"{$source}\" type=\"video/mp4\" />
                          </video>";
         } else {
