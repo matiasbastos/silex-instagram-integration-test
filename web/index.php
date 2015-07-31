@@ -10,8 +10,9 @@ require_once __DIR__.'/../vendor/autoload.php';
 
 // use
 use MetzWeb\Instagram\Instagram;
+use Controllers\MediaController;
 
-            // lets create a silex app
+// lets create a silex app
 $app = new Silex\Application();
 // debug on
 $app['debug'] = true;
@@ -27,15 +28,7 @@ $app['instagram'] = function () {
 };
 
 // this url gets the media info
-$app->get('/media/{id}', function ($id) use ($app) {
-    $instagram = $app['instagram'];
-    $media = $instagram->getMedia($id);
-    if ($media->meta->code != 200) {
-        return $app->json($media, $media->meta->code);
-    }
-
-    return $app->json(['id' => $media->data->id, 'location' => ['geopoint' => $media->data->location]]);
-});
+$app->get('/media/{id}', "Controllers\MediaController::getMediaLocation");
 
 // this url is an instagram login
 $app->get('/', function () use ($app) {
