@@ -44,7 +44,8 @@ class MediaController
         curl_setopt(
             $ch,
             CURLOPT_URL,
-            "https://maps.googleapis.com/maps/api/geocode/json?latlng={$lat},{$long}&result_type=street_address&key={$key}"
+            "https://maps.googleapis.com/maps/api/geocode/json?".
+            "latlng={$lat},{$long}&result_type=street_address&key={$key}"
         );
         curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-type: application/json'));
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
