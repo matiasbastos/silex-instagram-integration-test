@@ -54,12 +54,9 @@ class MediaController
         return $data;
     }
 
-    public function getInstagramLogin(Application $app)
+    public function showInstagramLogin(Application $app)
     {
-        $instagram = $app['instagram'];
-        $loginUrl = $instagram->getLoginUrl();
-
-        return $app['twig']->render('login.twig', array('loginUrl' => $loginUrl));
+        return $app['mustache']->render('login', ['loginUrl'=>$app['instagram']->getLoginUrl()]);
     }
 
     public function showInstagramMedia(Application $app)
@@ -119,7 +116,7 @@ class MediaController
         }
         $mediahtml = '<ul class="grid">'.$mediahtml.'</ul>';
 
-        return $app['twig']->render('media.twig', array(
+        return $app['mustache']->render('media_gallery', array(
             'username' => $data->user->username,
             'media' => $mediahtml,
         ));
