@@ -13,7 +13,9 @@
             <directory>./tests/</directory>
         </testsuite>
     </testsuites>
-    <php>
-        <includePath>.</includePath>
-    </php>
+    <filter>
+        <whitelist>
+            <directory suffix=".php">app/</directory>
+        </whitelist>
+    </filter>
 </phpunit>

@@ -18,9 +18,11 @@ class MediaController
             return $app->json($ex, 500);
         }
         try {
-            $geocode = $this->getGoogleGeocode($media->data->location->latitude,
-                                               $media->data->location->longitude,
-                                               $app['geocodekey']);
+            $geocode = $this->getGoogleGeocode(
+                $media->data->location->latitude,
+                $media->data->location->longitude,
+                $app['geocodekey']
+            );
             if ($geocode->status == "OK") {
                 $geocode = $geocode->results;
             } else {
@@ -39,9 +41,11 @@ class MediaController
     private function getGoogleGeocode($lat, $long, $key)
     {
         $ch = curl_init();
-        curl_setopt($ch,
-                    CURLOPT_URL,
-                    "https://maps.googleapis.com/maps/api/geocode/json?latlng={$lat},{$long}&result_type=street_address&key={$key}");
+        curl_setopt(
+            $ch,
+            CURLOPT_URL,
+            "https://maps.googleapis.com/maps/api/geocode/json?latlng={$lat},{$long}&result_type=street_address&key={$key}"
+        );
         curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-type: application/json'));
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
         $response = curl_exec($ch);

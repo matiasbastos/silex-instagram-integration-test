@@ -2,8 +2,11 @@
 require __DIR__ . '/../vendor/autoload.php';
 use Silex\WebTestCase;
 use Silex\Application;
-class MediaTest extends WebTestCase {
-    public function createApplication() {
+
+class MediaTest extends WebTestCase
+{
+    public function createApplication()
+    {
         $app = new Application();
         $app['debug'] = true;
         unset($app['exception_handler']);
@@ -11,7 +14,8 @@ class MediaTest extends WebTestCase {
         return $app;
     }
 
-    public function testMedia() {
+    public function testMedia()
+    {
         $client = $this->createClient();
         // test a known image 
         $crawler = $client->request('GET', '/media/1039923172635336043_47787070');
@@ -21,4 +25,3 @@ class MediaTest extends WebTestCase {
         $this->assertTrue($client->getResponse()->getStatusCode()==400);
     }
 }
-?>
