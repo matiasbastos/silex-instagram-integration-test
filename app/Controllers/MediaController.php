@@ -82,43 +82,31 @@ class MediaController
                 return 'An error occurred: '.$_GET['error_description'];
             }
         }
-        $mediahtml = '';
+        $media_data = [];
         // display all user likes
         foreach ($result->data as $media) {
-            $content = '<li>';
+            $m = [];
             // output media
             if ($media->type === 'video') {
-                // video
-                $poster = $media->images->low_resolution->url;
-                $source = $media->videos->standard_resolution->url;
-                $content .= "<video class=\"media video-js vjs-default-skin\" width=\"250\" height=\"250\" 
-                             poster=\"{$poster}\" data-setup='{\"controls\":true, \"preload\": \"auto\"}'>
-                             <source src=\"{$source}\" type=\"video/mp4\" />
-                             </video>";
+                $m['video'] = [
+                    'poster'=> $media->images->low_resolution->url,
+                    'source'=> $media->videos->standard_resolution->url
+                ];
             } else {
-                // image
-                $image = $media->images->low_resolution->url;
-                $content .= "<img class=\"media\" src=\"{$image}\"/>";
+                $m['image'] = ['source' => $media->images->low_resolution->url];
             }
             // create meta section
-            $avatar = $media->user->profile_picture;
-            $username = $media->user->username;
-            $comment = $media->caption->text;
-            $content .= "<div class=\"content\">
-                           <div class=\"avatar\" style=\"background-image: url({$avatar})\"></div>
-                           <p>{$username}</p>
-                           <div class=\"comment\">{$comment}</div>
-                         </div>";
-            // debug media
-            //$mediahtml .= "<xmp>".print_r($media, true)."</xmp>";
-            // output media
-            $mediahtml .= $content.'</li>';
+            $m['meta'] = [
+                'avatar' => $media->user->profile_picture,
+                'username' => $media->user->username,
+                'comment' => $media->caption->text
+            ];
+            $media_data[] = $m;
         }
-        $mediahtml = '<ul class="grid">'.$mediahtml.'</ul>';
 
         return $app['mustache']->render('media_gallery', array(
             'username' => $data->user->username,
-            'media' => $mediahtml,
+            'media' => $media_data,
         ));
     }
 }

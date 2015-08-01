@@ -12,11 +12,30 @@
 <div class="container">
     <header class="clearfix">
         <img src="assets/instagram.png" alt="Instagram logo">
-
         <h1>Instagram photos <span>taken by {{username}}</span></h1>
     </header>
     <div class="main">
-        {{{media}}}
+        <ul class="grid">
+            {{# media }}
+                <li>
+                {{# video }}
+                    <video class="media video-js vjs-default-skin" width="250" height="250" poster="{{ poster }}" data-setup='{"controls":true, "preload": "auto"}'>
+                         <source src="{{ source }}" type="video/mp4" />
+                    </video>
+                {{/ video }}
+                {{# image }}
+                    <img class="media" src="{{ source }}"/>
+                {{/ image }}
+                {{# meta }}
+                    <div class="content">
+                        <div class="avatar" style="background-image: url({{ avatar }})"></div>
+                        <p>{{ username }}</p>
+                        <div class="comment">{{ comment }}</div>
+                    </div>
+                {{/ meta }}
+                </li>
+            {{/ media }}
+        </ul>
     </div>
 </div>
 <!-- javascript -->
