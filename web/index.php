@@ -12,12 +12,12 @@ require_once __DIR__.'/../vendor/autoload.php';
 $app = new Silex\Application();
 $app['debug'] = true;
 $app->register(new Silex\Provider\TwigServiceProvider(), array('twig.path' => __DIR__.'/../app/Views'));
-$app->register(new DerAlex\Silex\YamlConfigServiceProvider('./config.yml'));
+$app->register(new Igorw\Silex\ConfigServiceProvider(__DIR__."/../config.yml"));
 $app['instagram'] = function () use ($app) {
     return new Instagram(array(
-        'apiKey' => $app['config']['instagram']['apiKey'],
-        'apiSecret' => $app['config']['instagram']['apiSecret'],
-        'apiCallback' => $app['config']['instagram']['apiCallback'],
+        'apiKey' => $app['instagram_api']['apiKey'],
+        'apiSecret' => $app['instagram_api']['apiSecret'],
+        'apiCallback' => $app['instagram_api']['apiCallback'],
     ));
 };
 

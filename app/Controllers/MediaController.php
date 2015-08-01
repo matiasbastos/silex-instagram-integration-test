@@ -20,7 +20,7 @@ class MediaController
         try {
             $geocode = $this->getGoogleGeocode($media->data->location->latitude,
                                                $media->data->location->longitude,
-                                               $app['config']['geocodekey']);
+                                               $app['geocodekey']);
             if ($geocode->status == "OK") {
                 $geocode = $geocode->results;
             } else {
