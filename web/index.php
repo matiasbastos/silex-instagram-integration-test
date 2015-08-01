@@ -12,7 +12,7 @@ require_once __DIR__.'/../vendor/autoload.php';
 $app = new Silex\Application();
 $app['debug'] = true;
 $app->register(new Silex\Provider\TwigServiceProvider(), array('twig.path' => __DIR__.'/../app/Views'));
-$app->register(new Igorw\Silex\ConfigServiceProvider(__DIR__."/../config/culo.yml"));
+$app->register(new Igorw\Silex\ConfigServiceProvider(__DIR__."/../config/config.json"));
 $app['instagram'] = function () use ($app) {
     return new Instagram(array(
         'apiKey' => $app['instagram_api']['apiKey'],
