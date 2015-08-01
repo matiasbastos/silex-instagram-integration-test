@@ -13,8 +13,6 @@ before_script:
   - composer install
 
 script:
-  - cd /home/travis/build/matiasbastos/silex-instagram-integration-test
-  - cp config.yml web/config.yml
   - ./vendor/bin/phpunit  --configuration phpunit.xml --coverage-text
   - ./vendor/bin/phpcs web --standard=psr2
   - ./vendor/bin/phpcs app --standard=psr2
