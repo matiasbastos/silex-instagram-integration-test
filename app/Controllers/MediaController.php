@@ -2,18 +2,51 @@
 namespace Controllers;
 
 use Silex\Application;
+use Exception;
 
 class MediaController
 {
     public function getMediaLocation(Application $app, $id)
     {
         $instagram = $app['instagram'];
-        $media = $instagram->getMedia($id);
-        if ($media->meta->code != 200) {
-            return $app->json($media, $media->meta->code);
+        try {
+            $media = $instagram->getMedia($id);
+            if ($media->meta->code != 200) {
+                return $app->json($media, $media->meta->code);
+            }
+        } catch (Exception $ex) {
+            return $app->json($ex, 500);
+        }
+        try {
+            $geocode = $this->getGoogleGeocode($media->data->location->latitude,
+                                               $media->data->location->longitude,
+                                               $app['config']['geocodekey']);
+            if ($geocode->status == "OK") {
+                $geocode = $geocode->results;
+            } else {
+                throw new Exception("Somethin' wrong with google.");
+            }
+        } catch (Exception $ex) {
+            $geocode = [];
         }
 
-        return $app->json(['id' => $media->data->id, 'location' => ['geopoint' => $media->data->location]]);
+        return $app->json(['id' => $media->data->id,
+                           'location' => ['geopoint' => $media->data->location,
+                                          'geocode' => $geocode]
+                          ]);
+    }
+    
+    private function getGoogleGeocode($lat, $long, $key)
+    {
+        $ch = curl_init();
+        curl_setopt($ch,
+                    CURLOPT_URL,
+                    "https://maps.googleapis.com/maps/api/geocode/json?latlng={$lat},{$long}&result_type=street_address&key={$key}");
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-type: application/json'));
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        $response = curl_exec($ch);
+        $data = json_decode($response);
+        return $data;
     }
 
     public function getInstagramLogin(Application $app)
