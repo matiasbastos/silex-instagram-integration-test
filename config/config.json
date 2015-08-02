@@ -1,4 +1,5 @@
 {
+    "debug" : true,
     "instagram_api" : {
         "apiKey" : "b32840dfd1d64dd2becd20ddb86c7e98",
         "apiSecret" : "164067ddc96544acb66875202fe372a3",
