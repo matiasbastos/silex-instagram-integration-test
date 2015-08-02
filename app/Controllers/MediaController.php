@@ -91,6 +91,9 @@ class MediaController
             $instagram->setAccessToken($token);
             // get user data
             $user = $instagram->getUser();
+            if ($user->meta->code != 200) {
+                throw new Exception("OAuth error.");
+            }
             // now you have access to all authenticated user methods
             $result = $instagram->getUserMedia();
         } catch (Exception $e) {
