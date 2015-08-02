@@ -9,6 +9,8 @@ class MediaController
     public function getMediaLocation(Application $app, $id)
     {
         $instagram = $app['instagram'];
+        $location = [];
+        // get media from instagram
         try {
             $media = $instagram->getMedia($id);
             if ($media->meta->code != 200) {
@@ -17,25 +19,33 @@ class MediaController
         } catch (Exception $ex) {
             return $app->json($ex, 500);
         }
+        // check for location info from instagram
+        try {
+            $location['latitude'] = $media->data->location->latitude;
+            $location['longitude'] = $media->data->location->longitude;
+            if(!$location['latitude'] || !$location['longitude']){
+                throw new Exception("No instagram location data.");
+            }    
+        } catch (Exception $ex) {
+            return $app->json(['id' => $media->data->id, 'location' => 'no location data']);
+        }    
+        // get aditional location info from google
         try {
             $geocode = $this->getGoogleGeocode(
-                $media->data->location->latitude,
-                $media->data->location->longitude,
+                $location['latitude'],
+                $location['longitude'],
                 $app['google_api']['apiKey']
             );
             if ($geocode->status == "OK") {
-                $geocode = $geocode->results;
+                $location['geocode'] = $geocode->results;
             } else {
                 throw new Exception("Somethin' wrong with google.");
             }
         } catch (Exception $ex) {
-            $geocode = [];
+            $location['geocode'] = "no geocode info";
         }
 
-        return $app->json(['id' => $media->data->id,
-                           'location' => ['geopoint' => $media->data->location,
-                                          'geocode' => $geocode]
-                          ]);
+        return $app->json(['id' => $media->data->id, 'location' => $location]);
     }
     
     private function getGoogleGeocode($lat, $long, $key)
@@ -97,11 +107,14 @@ class MediaController
             }
             // create meta section
             $m['meta'] = [
+                'id' => $media->id,
                 'avatar' => $media->user->profile_picture,
                 'username' => $media->user->username,
                 'comment' => $media->caption->text
             ];
             $media_data[] = $m;
+            // debug
+            //echo "<xmp>".print_r($media,true)."</xmp>";
         }
 
         return $app['mustache']->render('media_gallery', array(
