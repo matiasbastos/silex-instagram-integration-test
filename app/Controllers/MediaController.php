@@ -66,37 +66,40 @@ class MediaController
 
     public function showInstagramLogin(Application $app)
     {
+        $app['session']->remove('token');
         return $app['mustache']->render('login', ['loginUrl'=>$app['instagram']->getLoginUrl()]);
     }
 
     public function showInstagramMedia(Application $app)
     {
         $instagram = $app['instagram'];
-        $code = $_GET['code'];
-        // check whether the user has granted access
-        if (isset($code)) {
-            // receive OAuth token object
-            $data = $instagram->getOAuthToken($code);
-            $username = $data->user->username;
-            // store user access token
-            $instagram->setAccessToken($data);
-            try {
-                // now you have access to all authenticated user methods
-                $result = $instagram->getUserMedia();
-            } catch (Exception $e) {
-                return $app->redirect('/');
-            }
-        } else {
-            // check whether an error occurred
-            if (isset($_GET['error'])) {
-                return 'An error occurred: '.$_GET['error_description'];
-            }
+        // check whether an error occurred
+        if (isset($_GET['error'])) {
+            return 'An error occurred: '.$_GET['error_description'];
         }
+        // check whether the user has granted access
+        if (isset($_GET['code'])) {
+            // receive OAuth token object
+            $t = $instagram->getOAuthToken($_GET['code'], true);
+            $app['session']->set('token', $t);
+            return $app->redirect('/profile');
+        }
+        try {
+            // get user token
+            $token = $app['session']->get('token');
+            // store user access token
+            $instagram->setAccessToken($token);
+            // get user data
+            $user = $instagram->getUser();
+            // now you have access to all authenticated user methods
+            $result = $instagram->getUserMedia();
+        } catch (Exception $e) {
+            return $app->redirect('/');
+        }
+        // build user media array
         $media_data = [];
-        // display all user likes
         foreach ($result->data as $media) {
             $m = [];
-            // output media
             if ($media->type === 'video') {
                 $m['video'] = [
                     'poster'=> $media->images->low_resolution->url,
@@ -105,7 +108,6 @@ class MediaController
             } else {
                 $m['image'] = ['source' => $media->images->low_resolution->url];
             }
-            // create meta section
             $m['meta'] = [
                 'id' => $media->id,
                 'avatar' => $media->user->profile_picture,
@@ -113,12 +115,11 @@ class MediaController
                 'comment' => $media->caption->text
             ];
             $media_data[] = $m;
-            // debug
             //echo "<xmp>".print_r($media,true)."</xmp>";
         }
 
         return $app['mustache']->render('media_gallery', array(
-            'username' => $data->user->username,
+            'username' => $user->data->username,
             'media' => $media_data,
         ));
     }
