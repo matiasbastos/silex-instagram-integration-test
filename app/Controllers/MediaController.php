@@ -23,12 +23,12 @@ class MediaController
         try {
             $location['latitude'] = $media->data->location->latitude;
             $location['longitude'] = $media->data->location->longitude;
-            if(!$location['latitude'] || !$location['longitude']){
+            if (!$location['latitude'] || !$location['longitude']) {
                 throw new Exception("No instagram location data.");
-            }    
+            }
         } catch (Exception $ex) {
             return $app->json(['id' => $media->data->id, 'location' => 'no location data']);
-        }    
+        }
         // get aditional location info from google
         try {
             $geocode = $this->getGoogleGeocode(
