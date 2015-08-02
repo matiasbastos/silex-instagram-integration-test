@@ -1,5 +1,4 @@
 <?php
-require __DIR__ . '/../vendor/autoload.php';
 use Silex\WebTestCase;
 use Silex\Application;
 
@@ -7,10 +6,10 @@ class MediaTest extends WebTestCase
 {
     public function createApplication()
     {
-        $app = new Application();
-        $app['debug'] = true;
-        unset($app['exception_handler']);
+        date_default_timezone_set("America/Argentina/Cordoba");
+        $env = "test";
         require __DIR__.'/../web/index.php';
+        unset($app['exception_handler']);
         return $app;
     }
 

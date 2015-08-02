@@ -1,0 +1,12 @@
+{
+    "debug" : true,
+    "session.test" : true,
+    "instagram_api" : {
+        "apiKey" : "b32840dfd1d64dd2becd20ddb86c7e98",
+        "apiSecret" : "164067ddc96544acb66875202fe372a3",
+        "apiCallback" : "http://localhost:8080/profile"
+    },
+    "google_api" : {
+        "apiKey" : "AIzaSyAxNqoJ6ZFq7YTsa-JnmKyHsC6pSe2Pp8s"
+    }
+}

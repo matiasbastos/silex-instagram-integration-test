@@ -12,7 +12,8 @@ require_once __DIR__.'/../vendor/autoload.php';
 // create and config Silex App
 $app = new Silex\Application();
 $app->register(new Silex\Provider\SessionServiceProvider());
-$app->register(new Igorw\Silex\ConfigServiceProvider(__DIR__."/../config/config.json"));
+if(!isset($env)) $env = 'dev';
+$app->register(new Igorw\Silex\ConfigServiceProvider(__DIR__."/../config/config.{$env}.json"));
 $app['mustache'] = new Mustache_Engine([
     'loader' => new Mustache_Loader_FilesystemLoader(__DIR__.'/../app/Views', ['extension' => '.html']),
 ]);
