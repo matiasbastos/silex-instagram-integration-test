@@ -1,13 +1,16 @@
 <?php
+/**
+ *This file contains the MediaApiController Class.
+ */
 namespace Controllers;
 
 use Silex\Application;
 use Exception;
 
 /**
- * MediaController
+ * MediaApiController
  *
- * This file contains the logic for the media api to get the location data
+ * This class contains the logic for the media api to get the location data
  * of an Instagram media and also contains a sample Instagram login and
  * a sample of a media gallery to show the loged user media.
  *
@@ -15,7 +18,7 @@ use Exception;
  * @license http://www.opensource.org/licenses/MIT The MIT License
  */
  
-class MediaController
+class MediaApiController
 {
     /**
      * This function is used to get the Instagram media location data

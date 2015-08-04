@@ -23,7 +23,8 @@
  */
 
 use MetzWeb\Instagram\Instagram;
-use Controllers\MediaController;
+use Controllers\MediaApiController;
+use Controllers\ProfileController;
 
 // to handle statics
 if (array_key_exists('REQUEST_URI', $_SERVER) &&
@@ -56,13 +57,13 @@ $app['instagram'] = function () use ($app) {
 };
 
 // this url gets the media info
-$app->get('/media/{id}', "Controllers\MediaController::getMediaLocation");
+$app->get('/media/{id}', "Controllers\MediaApiController::getMediaLocation");
 
 // this url is an instagram login
-$app->get('/', "Controllers\MediaController::showInstagramLogin");
+$app->get('/', "Controllers\ProfileController::showInstagramLogin");
 
 // this url shows a gallery with the media of the logged user
-$app->get('/profile', "Controllers\MediaController::showInstagramMedia");
+$app->get('/profile', "Controllers\ProfileController::showInstagramMedia");
 
 // run silex
 $app->run();
