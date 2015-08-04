@@ -51,7 +51,6 @@ class ProfileTest extends WebTestCase
             // Get the profile page
             $client = $this->createClient();
             $crawler = $client->request('GET', '/profile');
-            echo $client->getResponse();
             // Assert that the response status code is 2xx
             $this->assertTrue($client->getResponse()->isSuccessful());
             // Assert that the response content contains a valid title

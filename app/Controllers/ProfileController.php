@@ -109,8 +109,7 @@ class ProfileController
             $m['meta'] = [
                 'id' => $media->id,
                 'avatar' => $media->user->profile_picture,
-                'username' => $media->user->username,
-                'comment' => $media->caption->text
+                'username' => $media->user->username
             ];
             $media_data[] = $m;
             //echo "<xmp>".print_r($media,true)."</xmp>";
