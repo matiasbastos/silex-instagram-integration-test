@@ -126,7 +126,7 @@ class MediaController
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
             $response = curl_exec($ch);
             $data = json_decode($response);
-        } catch  (Exception $ex) {
+        } catch (Exception $ex) {
             return $ex;
         }    
         return $data;
