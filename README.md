@@ -13,7 +13,10 @@ The project is fully unit-tested, compiles with the [PSR-2](http://www.php-fig.o
 ---
 
 ### TL;DR: How to run this project
-To run this project just type this into the terminal:
+To run this project you'll need:
+- [PHP 5.4+](http://php.net/downloads.php) with [cURL extension](http://php.net/manual/en/curl.installation.php).
+- [Composer](https://getcomposer.org/).
+Then just type this into the terminal:
 ```
 $ git clone https://github.com/matiasbastos/silex-instagram-integration-test.git
 $ cd silex-instagram-integration-test
