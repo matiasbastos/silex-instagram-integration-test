@@ -26,7 +26,8 @@ use MetzWeb\Instagram\Instagram;
 use Controllers\MediaController;
 
 // to handle statics
-if (array_key_exists('REQUEST_URI', $_SERVER) && preg_match('/\.(?:css|png|jpg|jpeg|gif)$/', $_SERVER['REQUEST_URI'])) {
+if (array_key_exists('REQUEST_URI', $_SERVER) &&
+    preg_match('/\.(?:html|js|css|png|jpg|jpeg|gif)$/', $_SERVER['REQUEST_URI'])) {
     return false;
 }
 
