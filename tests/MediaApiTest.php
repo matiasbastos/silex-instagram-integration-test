@@ -2,7 +2,7 @@
 use Silex\WebTestCase;
 use Silex\Application;
 
-class MediaTest extends WebTestCase
+class MediaApiTest extends WebTestCase
 {
     public function createApplication()
     {

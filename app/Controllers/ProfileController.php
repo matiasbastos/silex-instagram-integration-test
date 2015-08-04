@@ -23,7 +23,8 @@ class ProfileController
      * This function renders the Instagam login page.
      *
      * It uses the instagram api to get the login url and uses
-     * mustache to render the view.
+     * mustache to render the view. Also forces the user to login
+     * by removing any previous session token.
      *
      * @param object $app the silex application object.
      *
@@ -33,6 +34,9 @@ class ProfileController
      */
     public function showInstagramLogin(Application $app)
     {
+        /**
+         * Remove session token to force new loggin
+         */
         $app['session']->remove('token');
         return $app['mustache']->render('login', ['loginUrl'=>$app['instagram']->getLoginUrl()]);
     }

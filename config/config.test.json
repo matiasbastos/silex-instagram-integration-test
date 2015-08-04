@@ -13,6 +13,7 @@
     "valid.latitude" : "-31.2370407",
     "valid.longitude" : "-64.2988076",
     "valid.place_id" : "ChIJ510Zre-CMpQRBNfTH0MKCMk",
+    "valid.login_url" : "https://api.instagram.com/oauth/authorize?client_id=b32840dfd1d64dd2becd20ddb86c7e98&amp;redirect_uri=http%3A%2F%2Flocalhost%3A8080%2Fprofile&amp;scope=basic&amp;response_type=code",
     "invalid.media_id" : "1039923172635336000_47787070",
     "invalid.private_media_id" : "1042328170164362082_2112310485",
     "invalid.no_location_media_id" : "220460459745107553_47787070"
