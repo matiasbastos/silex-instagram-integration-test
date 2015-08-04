@@ -25,11 +25,12 @@
 use MetzWeb\Instagram\Instagram;
 use Controllers\MediaApiController;
 use Controllers\ProfileController;
+
 /**
  * handle static requests
  */
 if (array_key_exists('REQUEST_URI', $_SERVER) &&
-    preg_match('/\.(?:html|js|css|png|jpg|jpeg|gif)$/', $_SERVER['REQUEST_URI'])) {
+    preg_match('/\.(?:html|js|css|png|jpg|jpeg|gif|woff|ttf)$/', $_SERVER['REQUEST_URI'])) {
     return false;
 }
 
