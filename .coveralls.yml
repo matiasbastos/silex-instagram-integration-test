@@ -1,4 +1,0 @@
-service_name: travis-ci
-
-# for php-coveralls
-src_dir: app
