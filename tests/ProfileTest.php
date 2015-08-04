@@ -42,19 +42,26 @@ class ProfileTest extends WebTestCase
 
     public function testInstagramProfilePage()
     {
-        // Save session token
-        $this->app['session']->set('token', $this->app['valid.token']);
-        // Get the profile page
-        $client = $this->createClient();
-        $crawler = $client->request('GET', '/profile');
-        // Assert that the response status code is 2xx
-        //$this->assertTrue($client->getResponse()->isSuccessful());
-        // Assert that the response content contains a valid title
-        $this->assertContains("Instagram photos", $client->getResponse()->getContent());
-        // Assert that there is at least one li tag
-        $this->assertGreaterThan(0, $crawler->filter('li')->count());
-        // Assert that the response content contains the valid media_id
-        $this->assertContains($this->app['valid.media_id'], $client->getResponse()->getContent());
+        // Check for a valid token, user must submit a valid token to test
+        // get a valid token from: http://www.pinceladasdaweb.com.br/instagram/access-token/
+        // and paste it into config/config.test.json
+        if($this->app['valid.token']!=''){
+            // Save session token
+            $this->app['session']->set('token', $this->app['valid.token']);
+            // Get the profile page
+            $client = $this->createClient();
+            $crawler = $client->request('GET', '/profile');
+            echo $client->getResponse();
+            // Assert that the response status code is 2xx
+            $this->assertTrue($client->getResponse()->isSuccessful());
+            // Assert that the response content contains a valid title
+            $this->assertContains("Instagram photos", $client->getResponse()->getContent());
+            // Assert that there is at least one li tag
+            $this->assertGreaterThan(0, $crawler->filter('li')->count());
+        } else {
+            echo "Get a valid token from: http://www.pinceladasdaweb.com.br/instagram/access-token/";
+            echo " and paste it into config/config.test.json to run this test \n";
+        }
     }
 
     public function testInstagramProfilePageInvalidToken()
