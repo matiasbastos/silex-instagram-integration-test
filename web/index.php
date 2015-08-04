@@ -25,8 +25,9 @@
 use MetzWeb\Instagram\Instagram;
 use Controllers\MediaApiController;
 use Controllers\ProfileController;
-
-// to handle statics
+/**
+ * handle static requests
+ */
 if (array_key_exists('REQUEST_URI', $_SERVER) &&
     preg_match('/\.(?:html|js|css|png|jpg|jpeg|gif)$/', $_SERVER['REQUEST_URI'])) {
     return false;
@@ -34,7 +35,9 @@ if (array_key_exists('REQUEST_URI', $_SERVER) &&
 
 require_once __DIR__.'/../vendor/autoload.php';
 
-// create and config Silex App
+/**
+ * create and config Silex App
+ */
 $app = new Silex\Application();
 $app->register(new Silex\Provider\SessionServiceProvider());
 if (!isset($env)) {
@@ -56,14 +59,23 @@ $app['instagram'] = function () use ($app) {
     );
 };
 
-// this url gets the media info
+/**
+ * This url gets the media_id as parameter and it returns the location data in
+ * json format.
+ */
 $app->get('/media/{id}', "Controllers\MediaApiController::getMediaLocation");
 
-// this url is an instagram login
+/**
+ * This url returns the instagram login page.
+ */
 $app->get('/', "Controllers\ProfileController::showInstagramLogin");
 
-// this url shows a gallery with the media of the logged user
+/**
+ * This url shows a gallery with the media of the logged user.
+ */
 $app->get('/profile', "Controllers\ProfileController::showInstagramMedia");
 
-// run silex
+/*
+ * Run Silex.
+ */
 $app->run();

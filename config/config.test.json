@@ -9,12 +9,14 @@
     "google_api" : {
         "apiKey" : "AIzaSyAxNqoJ6ZFq7YTsa-JnmKyHsC6pSe2Pp8s"
     },
-    "valid.media_id" : "1039923172635336043_47787070",
-    "valid.latitude" : "-31.2370407",
-    "valid.longitude" : "-64.2988076",
+    "valid.media_id" : "1042328170164362082_2112310485",
+    "valid.latitude" : "-31.23704",
+    "valid.longitude" : "-64.298811",
     "valid.place_id" : "ChIJ510Zre-CMpQRBNfTH0MKCMk",
     "valid.login_url" : "https://api.instagram.com/oauth/authorize?client_id=b32840dfd1d64dd2becd20ddb86c7e98&amp;redirect_uri=http%3A%2F%2Flocalhost%3A8080%2Fprofile&amp;scope=basic&amp;response_type=code",
+    "valid.token" : "2112310485.b32840d.2941614e1c8044aebd8422539de2f030",
     "invalid.media_id" : "1039923172635336000_47787070",
-    "invalid.private_media_id" : "1042328170164362082_2112310485",
-    "invalid.no_location_media_id" : "220460459745107553_47787070"
+    "invalid.private_media_id" : "1039923172635336043_47787070",
+    "invalid.no_location_media_id" : "1042327095810169651_2112310485",
+    "invalid.token" : "47787070.b328123.0842d18ccdf2400cb3d95b1812362d59"
 }
