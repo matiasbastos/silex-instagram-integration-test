@@ -114,17 +114,21 @@ class MediaController
      */
     private function getGoogleGeocode($lat, $long, $key)
     {
-        $ch = curl_init();
-        curl_setopt(
-            $ch,
-            CURLOPT_URL,
-            "https://maps.googleapis.com/maps/api/geocode/json?".
-            "latlng={$lat},{$long}&result_type=street_address&key={$key}"
-        );
-        curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-type: application/json'));
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-        $response = curl_exec($ch);
-        $data = json_decode($response);
+        try {
+            $ch = curl_init();
+            curl_setopt(
+                $ch,
+                CURLOPT_URL,
+                "https://maps.googleapis.com/maps/api/geocode/json?".
+                "latlng={$lat},{$long}&result_type=street_address&key={$key}"
+            );
+            curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-type: application/json'));
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+            $response = curl_exec($ch);
+            $data = json_decode($response);
+        } catch  (Exception $ex) {
+            return $ex;
+        }    
         return $data;
     }
 
@@ -178,9 +182,13 @@ class MediaController
          * check whether the user has granted access
          */
         if (isset($_GET['code'])) {
-            $t = $instagram->getOAuthToken($_GET['code'], true);
-            $app['session']->set('token', $t);
-            return $app->redirect('/profile');
+            try {
+                $t = $instagram->getOAuthToken($_GET['code'], true);
+                $app['session']->set('token', $t);
+                return $app->redirect('/profile');
+            } catch (Exception $e) {
+                return $app->redirect('/profile?error='.$e->getMessage());
+            }
         }
         try {
             $token = $app['session']->get('token');
