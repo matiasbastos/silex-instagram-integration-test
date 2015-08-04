@@ -128,7 +128,7 @@ class MediaController
             $data = json_decode($response);
         } catch (Exception $ex) {
             return $ex;
-        }    
+        }
         return $data;
     }
 
