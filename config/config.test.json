@@ -10,9 +10,9 @@
         "apiKey" : "AIzaSyAxNqoJ6ZFq7YTsa-JnmKyHsC6pSe2Pp8s"
     },
     "valid.media_id" : "1042328170164362082_2112310485",
-    "valid.latitude" : "-31.23704",
-    "valid.longitude" : "-64.298811",
-    "valid.place_id" : "ChIJ510Zre-CMpQRBNfTH0MKCMk",
+    "valid.latitude" : "-31.238104543",
+    "valid.longitude" : "-64.30541466",
+    "valid.place_id" : "ChIJUSpb-O6CMpQRxUyBlQgStHA",
     "valid.login_url" : "https://api.instagram.com/oauth/authorize?client_id=b32840dfd1d64dd2becd20ddb86c7e98&amp;redirect_uri=http%3A%2F%2Flocalhost%3A8080%2Fprofile&amp;scope=basic&amp;response_type=code",
     "valid.token" : "",
     "invalid.media_id" : "1039923172635336000_47787070",
